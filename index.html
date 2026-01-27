@@ -39,6 +39,24 @@
     .links a:hover { color: #fff; }
     .contact { margin-top: 24px; color: #a0a0a0; font-size: 0.9rem; }
     .contact a { color: #E53935; text-decoration: none; }
+    .download-section { margin: 32px 0; }
+    .download-section h2 { color: #E53935; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .store-badges { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .store-badge { height: 50px; transition: transform 0.2s; }
+    .store-badge:hover { transform: scale(1.05); }
+    .android-testing {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      margin: 32px 0;
+    }
+    .android-testing h2 { color: #E53935; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .android-testing ol { padding-left: 20px; }
+    .android-testing li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .android-testing li:last-child { border-bottom: none; }
+    .android-testing a { color: #E53935; text-decoration: none; }
+    .android-testing a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -46,17 +64,36 @@
     <img src="logo.png" alt="Optimal: Fitness Tracker" class="logo">
     <h1>Optimal: Fitness Tracker</h1>
     <p class="tagline">Track your workouts. Visualize your progress. Achieve your goals.</p>
+    <div class="download-section">
+      <h2>Download Now</h2>
+      <div class="store-badges">
+        <a href="https://apps.apple.com/us/app/optimal-fitness-tracker/id6756274909" target="_blank">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="store-badge">
+        </a>
+      </div>
+    </div>
+
+    <div class="android-testing">
+      <h2>Android Beta Testing</h2>
+      <p style="color: #a0a0a0; margin-bottom: 16px;">Join our Android beta to get early access:</p>
+      <ol>
+        <li><strong>Step 1:</strong> <a href="https://groups.google.com/u/8/g/optimalfitness" target="_blank">Join the Google Group</a></li>
+        <li><strong>Step 2:</strong> <a href="https://play.google.com/apps/testing/com.optimalfitness.app" target="_blank">Opt-in to the test</a></li>
+        <li><strong>Step 3:</strong> <a href="https://play.google.com/store/apps/details?id=com.optimalfitness.app" target="_blank">Download from Play Store</a></li>
+      </ol>
+    </div>
+
     <div class="features">
       <h2>Features</h2>
       <ul>
         <li>Interactive muscle diagrams showing workout coverage</li>
         <li>Track weights, sets, and reps for every exercise</li>
-        <li>Weight history graphs to monitor progress</li>
+        <li>Weight history with timestamps</li>
         <li>Rest timer with customizable duration</li>
-        <li>200+ exercises with muscle group targeting</li>
-        <li>Create custom exercises</li>
-        <li>Dark mode optimized for gym use</li>
-        <li>Cloud sync across devices</li>
+        <li>19 built-in exercises with muscle group targeting</li>
+        <li>Create custom exercises (Premium)</li>
+        <li>Dark and light themes</li>
+        <li>Customizable accent colors</li>
       </ul>
     </div>
     <div class="links">
