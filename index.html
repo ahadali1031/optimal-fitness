@@ -71,6 +71,47 @@
     .screenshot-scroll::-webkit-scrollbar { height: 8px; }
     .screenshot-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
     .screenshot-scroll::-webkit-scrollbar-thumb { background: #E53935; border-radius: 4px; }
+    .tutorial-section { margin: 32px 0; }
+    .tutorial-btn {
+      background: #E53935;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .tutorial-btn:hover { opacity: 0.9; transform: scale(1.02); }
+    .tutorial-videos {
+      display: none;
+      margin-top: 16px;
+    }
+    .tutorial-videos.active { display: block; }
+    .video-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 0 16px;
+      scrollbar-width: thin;
+      scrollbar-color: #E53935 rgba(255,255,255,0.1);
+    }
+    .video-scroll::-webkit-scrollbar { height: 8px; }
+    .video-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    .video-scroll::-webkit-scrollbar-thumb { background: #E53935; border-radius: 4px; }
+    .video-scroll video {
+      flex-shrink: 0;
+      height: 400px;
+      border-radius: 12px;
+      scroll-snap-align: start;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 600px) {
+      .video-scroll video { height: 300px; }
+    }
     .screenshot-scroll img {
       flex-shrink: 0;
       height: 400px;
@@ -108,6 +149,18 @@
       </div>
     </div>
 
+    <div class="tutorial-section">
+      <button class="tutorial-btn" onclick="toggleTutorial()">Watch Tutorial</button>
+      <div class="tutorial-videos" id="tutorialVideos">
+        <div class="video-scroll">
+          <video src="videos/step1.mov" controls playsinline></video>
+          <video src="videos/step2.mov" controls playsinline></video>
+          <video src="videos/step3.mov" controls playsinline></video>
+          <video src="videos/step4.mov" controls playsinline></video>
+        </div>
+      </div>
+    </div>
+
     <div class="android-testing">
       <h2>Android Beta Testing</h2>
       <p style="color: #a0a0a0; margin-bottom: 16px;">Join our Android beta to get early access:</p>
@@ -138,5 +191,13 @@
     </div>
     <div class="contact">Contact: <a href="mailto:theoptimalapp@gmail.com">theoptimalapp@gmail.com</a></div>
   </div>
+  <script>
+    function toggleTutorial() {
+      const videos = document.getElementById('tutorialVideos');
+      const btn = document.querySelector('.tutorial-btn');
+      videos.classList.toggle('active');
+      btn.textContent = videos.classList.contains('active') ? 'Hide Tutorial' : 'Watch Tutorial';
+    }
+  </script>
 </body>
 </html>
