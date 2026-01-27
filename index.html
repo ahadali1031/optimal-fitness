@@ -71,7 +71,7 @@
     .screenshot-scroll::-webkit-scrollbar { height: 8px; }
     .screenshot-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
     .screenshot-scroll::-webkit-scrollbar-thumb { background: #E53935; border-radius: 4px; }
-    .tutorial-section { margin: 32px 0; }
+    .tutorial-section { margin: 32px 0; text-align: center; }
     .tutorial-btn {
       background: #E53935;
       color: #fff;
@@ -84,33 +84,63 @@
       transition: transform 0.2s, opacity 0.2s;
     }
     .tutorial-btn:hover { opacity: 0.9; transform: scale(1.02); }
-    .tutorial-videos {
+    .tutorial-content {
       display: none;
-      margin-top: 16px;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
     }
-    .tutorial-videos.active { display: block; }
-    .video-scroll {
+    .tutorial-content.active { display: block; }
+    .tutorial-carousel {
       display: flex;
-      gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding: 8px 0 16px;
-      scrollbar-width: thin;
-      scrollbar-color: #E53935 rgba(255,255,255,0.1);
+      scrollbar-width: none;
     }
-    .video-scroll::-webkit-scrollbar { height: 8px; }
-    .video-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
-    .video-scroll::-webkit-scrollbar-thumb { background: #E53935; border-radius: 4px; }
-    .video-scroll video {
-      flex-shrink: 0;
-      height: 400px;
+    .tutorial-carousel::-webkit-scrollbar { display: none; }
+    .tutorial-slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+    }
+    .tutorial-slide video {
+      height: 350px;
       border-radius: 12px;
-      scroll-snap-align: start;
       box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     }
+    .tutorial-slide h3 {
+      color: #fff;
+      font-size: 1.25rem;
+      margin: 16px 0 8px;
+    }
+    .tutorial-slide p {
+      color: #a0a0a0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 300px;
+    }
+    .tutorial-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .tutorial-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .tutorial-dot.active { background: #E53935; }
     @media (max-width: 600px) {
-      .video-scroll video { height: 300px; }
+      .tutorial-slide video { height: 280px; }
     }
     .screenshot-scroll img {
       flex-shrink: 0;
@@ -151,12 +181,34 @@
 
     <div class="tutorial-section">
       <button class="tutorial-btn" onclick="toggleTutorial()">Watch Tutorial</button>
-      <div class="tutorial-videos" id="tutorialVideos">
-        <div class="video-scroll">
-          <video src="videos/step1.mov" controls playsinline></video>
-          <video src="videos/step2.mov" controls playsinline></video>
-          <video src="videos/step3.mov" controls playsinline></video>
-          <video src="videos/step4.mov" controls playsinline></video>
+      <div class="tutorial-content" id="tutorialContent">
+        <div class="tutorial-carousel" id="tutorialCarousel">
+          <div class="tutorial-slide">
+            <video src="videos/step1.mov" controls playsinline></video>
+            <h3>Create a workout</h3>
+            <p>Click "+ New Workout" to get started, then enter the name of your workout.</p>
+          </div>
+          <div class="tutorial-slide">
+            <video src="videos/step2.mov" controls playsinline></video>
+            <h3>Add or create your exercises</h3>
+            <p>Click "+ New Exercise" to either select a standard exercise or create your own.</p>
+          </div>
+          <div class="tutorial-slide">
+            <video src="videos/step3.mov" controls playsinline></video>
+            <h3>Log your progress</h3>
+            <p>Click on the unit to pick how you're tracking your exercise, then type in the amount and click log every time you increase!</p>
+          </div>
+          <div class="tutorial-slide">
+            <video src="videos/step4.mov" controls playsinline></video>
+            <h3>Personalize your settings</h3>
+            <p>In your settings page, you can change the app theme color and the colors of the heatmap on your body diagram.</p>
+          </div>
+        </div>
+        <div class="tutorial-dots">
+          <div class="tutorial-dot active" onclick="goToSlide(0)"></div>
+          <div class="tutorial-dot" onclick="goToSlide(1)"></div>
+          <div class="tutorial-dot" onclick="goToSlide(2)"></div>
+          <div class="tutorial-dot" onclick="goToSlide(3)"></div>
         </div>
       </div>
     </div>
@@ -193,11 +245,36 @@
   </div>
   <script>
     function toggleTutorial() {
-      const videos = document.getElementById('tutorialVideos');
+      const content = document.getElementById('tutorialContent');
       const btn = document.querySelector('.tutorial-btn');
-      videos.classList.toggle('active');
-      btn.textContent = videos.classList.contains('active') ? 'Hide Tutorial' : 'Watch Tutorial';
+      content.classList.toggle('active');
+      btn.textContent = content.classList.contains('active') ? 'Hide Tutorial' : 'Watch Tutorial';
     }
+
+    function goToSlide(index) {
+      const carousel = document.getElementById('tutorialCarousel');
+      const slides = carousel.querySelectorAll('.tutorial-slide');
+      const slideWidth = slides[0].offsetWidth;
+      carousel.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+      updateDots(index);
+    }
+
+    function updateDots(activeIndex) {
+      const dots = document.querySelectorAll('.tutorial-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === activeIndex);
+      });
+    }
+
+    // Update dots on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      const carousel = document.getElementById('tutorialCarousel');
+      carousel.addEventListener('scroll', () => {
+        const slideWidth = carousel.querySelector('.tutorial-slide').offsetWidth;
+        const index = Math.round(carousel.scrollLeft / slideWidth);
+        updateDots(index);
+      });
+    });
   </script>
 </body>
 </html>
